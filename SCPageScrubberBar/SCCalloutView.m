@@ -33,6 +33,16 @@
 
 @implementation SCCalloutView
 
+
+@synthesize anchorDirection = _anchorDirection;
+@synthesize titleLabel = _titleLabel;
+@synthesize subtitleLabel = _subtitleLabel;
+@synthesize titleLabelInsets = _titleLabelInsets;
+@synthesize subtitleLabelInsets = _subtitleLabelInsets;
+@synthesize maxWidth = _maxWidth;
+@synthesize minWidth = _minWidth;
+
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

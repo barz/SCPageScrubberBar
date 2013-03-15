@@ -26,6 +26,14 @@
 
 @implementation SCPageScrubberBar
 
+@synthesize dotsImage = _dotsImage;
+@synthesize clearImage = _clearImage;
+@synthesize backgroundLayer = _backgroundLayer;
+@synthesize calloutView = _calloutView;
+@synthesize delegate = _delegate;
+@synthesize alwaysShowTitleView = _alwaysShowTitleView;
+@synthesize isPopoverMode = _isPopoverMode;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
