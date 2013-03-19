@@ -57,6 +57,9 @@
     nFrame.size.width = self.bounds.size.width;
     self.backgroundLayer.frame = nFrame;
     
+    _dotsImage = nil;
+    self.backgroundLayer.contents = (id)self.dotsImage.CGImage;
+    
     [self _updateCalloutViewText];
     [self _updateCalloutViewPosition];
 }
