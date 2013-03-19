@@ -13,6 +13,9 @@
 @property (nonatomic, weak) id <SCPageScrubberBarDelegate> delegate;
 @property (nonatomic, assign) BOOL alwaysShowTitleView;
 @property (nonatomic, assign) BOOL isPopoverMode;
+
+- (void)setValue:(float)value showCallout:(BOOL)show;
+
 @end
 
 @protocol SCPageScrubberBarDelegate <NSObject>

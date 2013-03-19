@@ -21,7 +21,6 @@
 - (void)_fadeCalloutViewInAndOut:(BOOL)aFadeIn;
 - (void)_updateCalloutViewPosition;
 - (void)_updateCalloutViewText;
-- (UIImage*)_generateDotsImage;
 @end
 
 @implementation SCPageScrubberBar
@@ -64,6 +63,23 @@
     [self _updateCalloutViewPosition];
 }
 
+- (void)setValue:(float)value showCallout:(BOOL)show {
+    self.value = value;
+    
+    if (show) {
+        self.calloutView.alpha = 0.0;
+        [UIView animateWithDuration:0.5
+                         animations:^{
+                             self.calloutView.alpha = 1.0;
+                         } completion:^(BOOL finished) {
+                             [UIView animateWithDuration:0.5
+                                              animations:^{
+                                                  self.calloutView.alpha = 0.0;
+                                              } completion:NULL];
+                         }];
+    }
+}
+
 #pragma mark - Self Private Methods
 
 - (CGRect)_thumbRect
@@ -77,14 +93,15 @@
 
 - (void)_fadeCalloutViewInAndOut:(BOOL)aFadeIn
 {
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.5];
-    if (aFadeIn) {
-        self.calloutView.alpha = 1.0;
-    } else {
-        self.calloutView.alpha = 0.0;
-    }
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         if (aFadeIn) {
+                             self.calloutView.alpha = 1.0;
+                         }
+                         else {
+                             self.calloutView.alpha = 0.0;
+                         }
+                     } completion:NULL];    
 }
 
 - (void)_updateCalloutViewPosition
@@ -116,31 +133,6 @@
     }
     
     [self.calloutView sizeToFit];
-}
-
-- (UIImage*)_generateDotsImage
-{
-    // Get the image of one dot
-    UIImage *image = [UIImage imageNamed:@"SCPageScrubberBar.bundle/dot.png"];
-    CGFloat scale = [UIScreen mainScreen].scale;
-    CGSize size = CGSizeMake(self.bounds.size.width, image.size.height);
-    // The total width of one dot including spacing
-    CGFloat oneDotWidth = image.size.width + kSCDotImageSpacing;
-    
-    UIGraphicsBeginImageContextWithOptions(size, NO, scale);
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    
-    // Draw dotImage repeatly
-    NSInteger len = (int)(size.width / oneDotWidth);
-    for (NSInteger i = 0; i < len; i++) {
-        CGPoint drawPoint = CGPointMake(i * oneDotWidth + kSCDotImageSpacing / 2, 0);
-        CGContextDrawImage(ctx, (CGRect){drawPoint, image.size}, image.CGImage);
-    }
-    
-    // Generate the image
-    UIImage *resultImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return resultImage;
 }
 
 
@@ -220,8 +212,8 @@
 - (SCCalloutView *)calloutView
 {
     if (_calloutView == nil) {
-        _calloutView = [[SCCalloutView alloc] initWithFrame:CGRectMake(0, 0, 100, 0)];
-        _calloutView.alpha = 0;
+        _calloutView = [[SCCalloutView alloc] initWithFrame:CGRectMake(0.0, 0.0, 100.0, 0.0)];
+        _calloutView.alpha = 0.0;
         _calloutView.anchorDirection = self.isPopoverMode ? SCCalloutViewAnchorBottom : SCCalloutViewAnchorNone;
     }
     return _calloutView;
@@ -232,9 +224,9 @@
     if (_alwaysShowTitleView != alwaysShowTitleView) {
         _alwaysShowTitleView = alwaysShowTitleView;
         if (_alwaysShowTitleView) {
-            self.calloutView.alpha = 1;
+            self.calloutView.alpha = 1.0;
         } else {
-            self.calloutView.alpha = 0;
+            self.calloutView.alpha = 0.0;
         }
     }
 }
