@@ -7,6 +7,8 @@
 //
 
 #import "SCCalloutView.h"
+#import "NSString+BZExtensions.h"   // Hsoi 2013-08-19 - not ideal to use our own, but here we are.
+
 #define kSCCalloutViewHeight 43.0f
 #define kSCCalloutViewMinWidth 20.0f
 #define kSCCalloutViewMinWidthWidthAnthor 41.0f
@@ -73,8 +75,8 @@
 
 - (CGSize)sizeThatFits:(CGSize)size
 {
-    CGSize titleLabelSize = [self.titleLabel.text sizeWithFont:self.titleLabel.font];
-    CGSize subTitleLabelSize = [self.subtitleLabel.text sizeWithFont:self.subtitleLabel.font];
+    CGSize titleLabelSize = [self.titleLabel.text barz_sizeWithFont:self.titleLabel.font];
+    CGSize subTitleLabelSize = [self.subtitleLabel.text barz_sizeWithFont:self.subtitleLabel.font];
     // Get the max width of the two labels
     CGFloat maxLabelsWidth = MAX(titleLabelSize.width, subTitleLabelSize.width);
     
@@ -184,11 +186,7 @@
         _titleLabel.shadowColor = [UIColor blackColor];
         _titleLabel.shadowOffset = CGSizeMake(0, -1);
         _titleLabel.contentMode = UIViewContentModeCenter;
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0) {
-            _titleLabel.textAlignment = NSTextAlignmentCenter;
-        } else {
-            _titleLabel.textAlignment = UITextAlignmentCenter;
-        }
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _titleLabel;
 }
@@ -203,11 +201,7 @@
         _subtitleLabel.shadowColor = [UIColor blackColor];
         _subtitleLabel.shadowOffset = CGSizeMake(0, -1);
         _subtitleLabel.contentMode = UIViewContentModeCenter;
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0) {
-            _subtitleLabel.textAlignment = NSTextAlignmentCenter;
-        } else {
-            _subtitleLabel.textAlignment = UITextAlignmentCenter;
-        }
+        _subtitleLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _subtitleLabel;
 }
