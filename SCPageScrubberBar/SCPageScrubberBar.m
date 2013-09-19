@@ -39,10 +39,15 @@
     if (self) {
         // Initialization code
         [self.layer addSublayer:self.backgroundLayer];
-        UIImage* thumbImage = [UIImage imageNamed:@"SCPageScrubberBar.bundle/thumb.png"];
+        
+        // Hsoi 2013-09-19 - as a quick way of having a more iOS7 look and feel, only use the
+        // bundled thumb image under pre-7 OS's. Otherwise, just use the 7 slider thumb.
+        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+            UIImage* thumbImage = [UIImage imageNamed:@"SCPageScrubberBar.bundle/thumb.png"];
+            [self setThumbImage:thumbImage forState:UIControlStateNormal];
+        }
         [self setMaximumTrackImage:self.clearImage forState:UIControlStateNormal];
         [self setMinimumTrackImage:self.clearImage forState:UIControlStateNormal];
-        [self setThumbImage:thumbImage forState:UIControlStateNormal];
 
         [self addSubview:self.calloutView];
     }
